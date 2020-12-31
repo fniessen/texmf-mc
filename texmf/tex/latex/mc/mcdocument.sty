@@ -1,0 +1,345 @@
+%% mcdocument.sty -- LaTeX2e MC common commands and environments
+%
+% Copyright (C) 2008-2015 Fabrice Niessen
+
+%* --[ Identification --------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mcdocument}[2015/09/25 v1.2 Mission Critical IT Common]
+
+%* --[ Imports ---------------------------------------------------------------
+
+% multilingual support for LaTeX
+% \RequirePackage[frenchb,english]{babel} % main language is the latest loaded
+\RequirePackage[english,dutch]{babel} % main language is the latest loaded
+\RequirePackage[printonlyused]{acronym}% (not in medium TeX Live installation)
+\RequirePackage{listings} % must be loaded after `babel'
+
+\RequirePackage{mccommon}
+
+\RequirePackage{etoolbox} % contains the ifstrempty command
+\RequirePackage{atbegshi} % Added to avoid the "incompatible list can't be
+% unboxed" error (see
+% http://groups.google.com/group/fr.comp.text.tex/browse_thread/thread/c982e226aa083a23?pli=1)
+
+\RequirePackage{tikz}
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{tabu}
+\RequirePackage{numprint}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{marvosym} % it loads the eurosym package with "official" option.
+\RequirePackage{textcomp} % mainly for \texteuro
+\RequirePackage{hyperref} % likes to be loaded last (behalf exceptions)
+
+%* --[ Setup -----------------------------------------------------------------
+
+% to switch to French, use `\selectlanguage{french}' (not `frenchb')
+% after `\begin{document}'
+%     Use `\mtcselectlanguage{french}' for minitoc
+\addto\captionsfrench{\def\tablename{{\scshape Tableau}}}
+
+% \@ifundefined{frenchbsetup}
+%     {\NoAutoSpaceBeforeFDP}
+%     {\frenchbsetup{AutoSpacePunctuation=false,%
+%                    StandardLists=true,% avoid conflicts with `enumitem'
+%                    ShowOptions}}
+
+%* --[ Declarations ----------------------------------------------------------
+
+%% OBSOLETE, but for backward support
+% New numprint column types:
+% - d: 7 figures before decimal sign and 2 after;
+% - e: 7 figures before decimal sign and 0 after.
+\newcolumntype{d}{N{7}{2}}
+\newcolumntype{e}{N{7}{0}}
+%% OBSOLETE (use SIunitx, instead, and the S column type)
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+\RequirePackage{siunitx}
+\if@french
+    \sisetup{decimalsymbol=comma,sepfour=true,tabtextalign=right,tabformat=-7.2,tabnumalign=right,mode=text}
+\else
+    \sisetup{decimalsymbol=fullstop,digitsep=comma,tabtextalign=right,tabformat=-7.2,tabnumalign=right,mode=text}
+\fi
+% use `S' as column spec
+% \newcommand{\cl}[1]{\multicolumn{1}{l}{#1}}
+% \newcommand{\cc}[1]{\multicolumn{1}{c}{#1}}
+\newcommand{\s}[1]{\multicolumn{1}{r}{#1}}
+% to use in Org for the title cells
+
+%* --[ Commands --------------------------------------------------------------
+
+%\newcommand{\\fancy}{\@ifnextchar*{cmd with star}{cmdwithout star} Other stuff}
+\newcommand*{\mcchapter}[1]{
+    \chapter*{#1}
+    \addcontentsline{toc}{chapter}{#1}
+    \markboth{#1}{}
+}
+\newcommand{\mcsection}[1]{
+    \section*{#1}
+    \addcontentsline{toc}{section}{#1}
+    \markboth{#1}{}
+}
+
+\addto\captionsenglish{\def\acronymtitle{Acronyms}}
+\addto\captionsfrench{\def\acronymtitle{Acronymes}}
+\renewcommand*{\acffont}[1]{\emph{#1}}
+\renewcommand*{\acfsfont}[1]{\emph{#1}}
+
+\newcommand{\mcacro}{
+\@ifundefined{chapter}{
+    \section*{\acronymtitle}
+    \addcontentsline{toc}{section}{\acronymtitle}
+}{
+    \chapter*{\acronymtitle}
+    \addcontentsline{toc}{chapter}{\acronymtitle}
+}
+    \markboth{\acronymtitle}{}
+
+    \begin{mcnormalspacing}
+        \begin{acronym}[LARGESTACRO]
+            \input{acronyms}
+        \end{acronym}
+    \end{mcnormalspacing}
+}
+
+% include the URLs of the links as footnotes
+% See
+% http://tex.stackexchange.com/questions/35310/problem-with-use-of-in-custom-href-command
+% for issue with '#' in custom href command
+\let\orig@href=\href
+\renewcommand*{\href}{\begingroup\@makeother\#\mc@href}
+\newcommand*{\mc@href}[2]{%
+  \ifthenelse{\equal{#1}{#2}}
+  {\orig@href{#1}{\nolinkurl{#2}}}
+  {\orig@href{#1}{\nolinkurl{#2}}\footnote{\url{#1}}}
+  \endgroup}
+
+%** This section is inherited from the old mc-macro.sty file
+% This section needs some cleanup
+
+\newcommand{\tw}[1]{\textbf{\texttt{\color{darkgreen}#1}}}
+\newcommand{\ew}[1]{\textsl{\color{darkblue}#1}}
+
+
+\newcommand*\mcfile{\nolinkurl}
+\newcommand*\mccmd{\texttt}
+\newcommand\mcshowfont[4]{% font parameters
+Font #1/#2/#3/#4:
+{\usefont{#1}{#2}{#3}{#4}%
+ABCDEF abcdef 123456 ,;:!}%
+\par}
+
+
+\newcommand\mcext[1]{\texttt{#1}}
+\newcommand\mcpkg[1]{\textsf{#1}}
+\newcommand\mcEXT[3]{\noindent #1\quad\ext{#2}\quad---\quad#3\par}
+\def\<#1>{$\langle$\textit{\rmfamily n}$\rangle$}
+
+
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+
+% souligner avec une commande plus intelligente que l'horrible \underline: \ul
+% de soul
+\RequirePackage{soul}% (not in medium TeX Live installation)
+
+% hide lines of text
+\DeclareRobustCommand{\mcsecret}{%
+\def\SOUL@everytoken{\phantom{\the\SOUL@token}}\SOUL@}
+% % to deactivate `\mcsecret' command:
+% \renewcommand\mcsecret[1]{#1}
+
+% see as well the `soulutf8' package (from Heiko Oberdiek) which is an
+% extension of the `soul' package for those who are encoding in UTF-8
+
+
+% how not to have a page break with what is following?
+\def\mckeepwithnextpar{\par\nobreak\@afterheading}
+% `\nobreak' is `\penalty10000', and `\allowbreak' is `\penalty0'
+
+
+\newenvironment{mcnormalspacing}
+{\par\setstretch{1}}
+{\par}
+
+
+% for better printed documentation of nuweb/noweb chunks of code
+\newenvironment{mcnxweb}
+{%
+\definecolor{shadecolor}{HTML}{FFFFCC}% light yellow
+\begin{shaded}% for background color
+    \begin{mcnormalspacing}}
+{%
+    \end{mcnormalspacing}
+\end{shaded}}
+
+\newcommand\mcemail{\begingroup \urlstyle{tt}\Url}
+
+% must be loaded after url and hyperref
+\RequirePackage[colorinlistoftodos]{todonotes}% (not in medium TeX Live installation)
+\definecolor{mc@todobg}{HTML}{F5F5F5} % white smoke
+\definecolor{mc@todoborder}{HTML}{DDDDDD} % ~ gray87
+\renewcommand{\@todonotes@backgroundcolor}{mc@todobg}
+\renewcommand{\@todonotes@bordercolor}{mc@todoborder}
+
+\newcounter{mccomment}
+\newcommand{\mccomment}[2][]{% initials of the author + note in the margin
+\if@mccomment
+    \refstepcounter{mccomment}
+    {\setstretch{0.7}% spacing
+    \todo[color={red!100!green!33},size=\small]{%
+    \textbf{Comment [\uppercase{#1}\themccomment]:}~#2}}
+\else
+    \relax
+\fi
+}
+
+% This is to be compared with mccomment. Certainly not as good.
+\newcommand{\fixxme}[1]{%%
+  \textcolor{red}{FIXXME}\marginpar{\textcolor{red}{#1}}%%
+}
+
+\newcommand{\mctodo}[2][]{% title in bold + note
+\refstepcounter{mccomment}
+{\todo[inline,color=blue!20]{
+% \ifthenelse{\equal{{#1}}{}}
+% {}%
+% {\textbf{#1}~}%
+\textbf{TODO [\uppercase{#1}\themccomment]:}~#2}}}
+
+% Tired of doing 1\,280\,772\,211? `siunitx' is great for avoiding typesetting
+% numbers and units in full.
+% You need the "sepfour" option turned on:
+% \sisetup{sepfour} % For the entire document
+
+
+%** New command definitions
+
+%* --[ Environments ----------------------------------------------------------
+
+% mcovalbox definition
+\definecolor{mcballblue}{HTML}{009EE0}% blue of MC "it" ball
+\newlength{\mcovalboxwidth}
+
+\newenvironment{mcovalbox}[1][]{
+    \setlength{\mcovalboxwidth}{\linewidth}
+    % Remove 2x inner sep from the width
+    \addtolength{\mcovalboxwidth}{-10pt}
+\begin{tikzpicture}[mcovalboxstyle/.append style={rectangle,rounded corners=5pt,inner sep=5pt,inner ysep=5pt}]
+    \if@black
+        \tikzset{mcovalboxstyle/.append style={draw}}
+    \else
+        \tikzset{mcovalboxstyle/.append style={fill=mcballblue!30!white}}
+    \fi
+    \node [mcovalboxstyle] (box) \bgroup
+    \begin{minipage}{\mcovalboxwidth}
+        \ifstrempty{#1}{}{\textbf{#1~--- }}%
+        }{
+    \end{minipage}
+    \egroup;
+\end{tikzpicture}
+\newline{}
+}
+
+% Redefine the shaded environment in order to:
+% - have a frame around the environment (use \fcolorbox instead of \colorbox);
+% - add some space between the text and the frame.
+% Also define a default framecolor color.
+\definecolor{framecolor}{named}{black}
+\renewenvironment{shaded}{%
+\def\FrameCommand{\fboxsep=3pt \fcolorbox{framecolor}{shadecolor}}%
+\MakeFramed {\FrameRestore}}%
+{\endMakeFramed}
+
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins}
+
+\definecolor{infobg}{HTML}{BDE5F8}
+\definecolor{infofg}{HTML}{00529B}
+
+\newtcolorbox{info}{%
+  enhanced,
+  colback=infobg,
+  coltext=infofg,
+  colframe=infofg,
+  fontupper=\sffamily,
+  left=10mm,
+  overlay={%
+    \node at ([xshift=5mm]frame.west)
+    {\includegraphics[width=7mm,height=7mm]{info}};}
+}
+
+\definecolor{tipbg}{HTML}{DFF2BF}
+\definecolor{tipfg}{HTML}{4F8A10}
+
+\newtcolorbox{tip}{%
+  enhanced,
+  colback=tipbg,
+  coltext=tipfg,
+  colframe=tipfg,
+  fontupper=\sffamily,
+  left=10mm,
+  overlay={%
+    \node at ([xshift=5mm]frame.west)
+    {\includegraphics[width=7mm,height=7mm]{tip}};}
+}
+
+\definecolor{notebg}{HTML}{FEEFB3}
+\definecolor{notefg}{HTML}{9F6000}
+
+\newtcolorbox{note}{%
+  enhanced,
+  colback=notebg,
+  coltext=notefg,
+  colframe=notefg,
+  fontupper=\sffamily,
+  left=10mm,
+  overlay={%
+    \node at ([xshift=5mm]frame.west)
+    {\includegraphics[width=7mm,height=7mm]{note}};}
+}
+
+\definecolor{warningbg}{HTML}{FFBABA}
+\definecolor{warningfg}{HTML}{D8000C}
+
+\newtcolorbox{warning}{%
+  enhanced,
+  colback=warningbg,
+  coltext=warningfg,
+  colframe=warningfg,
+  fontupper=\sffamily,
+  left=10mm,
+  overlay={%
+    \node at ([xshift=5mm]frame.west)
+    {\includegraphics[width=7mm,height=7mm]{warning}};}
+}
+
+\newtcolorbox{error}{%
+  enhanced,
+  colback=warningbg,
+  coltext=warningfg,
+  colframe=warningfg,
+  fontupper=\sffamily,
+  left=10mm,
+  overlay={%
+    \node at ([xshift=5mm]frame.west)
+    {\includegraphics[width=7mm,height=7mm]{warning}};}
+}
+
+%% End of package
+\endinput % very last line
+
+% This is for the sake of Emacs.
+% Local Variables:
+% ispell-local-dictionary: "american"
+% time-stamp-format: "%:y/%02m/%02d"
+% time-stamp-start: "Provides\\(Class\\|Package\\){[a-zA-Z-]+}\\["
+% time-stamp-end: " "
+% End:
+
+%% mcdocument.sty ends here

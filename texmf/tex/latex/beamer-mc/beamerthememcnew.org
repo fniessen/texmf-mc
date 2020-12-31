@@ -1,0 +1,394 @@
+#+TITLE:     Beamer Theme MC New (à la Berkeley)
+#+AUTHOR:    Fabrice Niessen
+#+EMAIL:     fni@missioncriticalit.com
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+
+#+PROPERTY:  eval no
+#+PROPERTY:  comments link
+#+PROPERTY:  noweb yes
+
+#+SETUPFILE: ~/src/org-style/theme-bigblow.setup
+
+* Copyright
+
+#+name: copyright
+#+begin_src latex
+% Copyright 2010-2013 by Fabrice Niessen
+#+end_src
+
+* Main theme file
+  :PROPERTIES:
+  :tangle:   beamerthememcnew.sty
+  :END:
+
+#+begin_src latex
+<<copyright>>
+
+\mode<presentation>
+
+% \usefonttheme{mcnew}
+\usecolortheme{mcnew}
+\useinnertheme{mcnew}
+\useoutertheme{mcnew}
+\usefonttheme{mcnew}
+
+\mode
+<all>
+#+end_src
+
+* Color theme
+  :PROPERTIES:
+  :tangle:   beamercolorthememcnew.sty
+  :END:
+
+#+begin_src latex
+<<copyright>>
+
+% \ProvidesPackageRCS $Header$
+
+% TODO Test this with different base themes, such as:
+% \usetheme{Goettingen}\useoutertheme{infolines}\usecolortheme{mc}
+
+
+% used for normal text
+\setbeamercolor*{normal text}{fg=black,bg=white}
+
+% XXX
+\DeclareOption{overlystylish}
+{
+  \def\beamer@cta@do{
+    \setbeamertemplate{background canvas}[vertical shading][bottom=black,top=black,middle=blue!50!black]
+  }
+}
+\ProcessOptions
+
+\@ifundefined{beamer@cta@do}{}{\beamer@cta@do}
+
+\mode<presentation>
+
+\definecolor{mc@darkblue}{rgb}{0.13,0.13,0.26}
+\definecolor{mc@lightblue}{rgb}{0.12,0.49,0.80}
+\definecolor{mc@darkred}{rgb}{0.50,0.00,0.00}
+\definecolor{mc@gray}{rgb}{0.26,0.26,0.26}
+
+\definecolor{mc@infolines-fg}{named}{white}
+\definecolor{mc@infolines-bg}{named}{mc@lightblue}
+\definecolor{mc@navsymbols}{named}{mc@lightblue}
+\definecolor{mc@itemi}{named}{mc@lightblue}
+
+\setbeamercolor*{alerted text}{fg=mc@lightblue}
+
+\setbeamercolor*{example text}{fg=green!65!black}
+
+% used for structured text, and as a base for headings of blocks, item buttons, and titles
+\setbeamercolor*{structure}{fg=mc@darkblue}% XXX XXX XXX change it to see where it is used
+
+% used in the headline and footline (right part: current date, and frame count)
+\setbeamercolor{palette primary}{use={structure,normal text},fg=mc@infolines-fg,bg=mc@infolines-bg!75!black}
+
+% used in the footline (center part: presentation's title)
+\setbeamercolor{palette secondary}{use={structure,normal text},fg=mc@infolines-fg,bg=mc@infolines-bg!60!black}
+
+% used in the headline and footline (left part: author's name, and institution)
+\setbeamercolor{palette tertiary}{use={structure,normal text},fg=mc@infolines-fg,bg=mc@infolines-bg!45!black}
+
+\setbeamercolor{palette quaternary}{use={structure,normal text},fg=structure.fg,bg=normal text.bg!30!black}
+#+end_src
+
+#+begin_src latex
+\setbeamercolor{section in sidebar}{bg=white}% with or without *?
+
+% XXX Remove hardcoded colors from here
+\setbeamercolor{subsection in sidebar}{fg=white,bg=mc@lightblue!75!black}% with or without *?
+\setbeamercolor{subsection in sidebar shaded}{use=subsection in sidebar,fg=subsection in sidebar.fg!40!bg}% with or without *?
+#+end_src
+
+#+begin_src latex
+% used for the navigation symbols
+\setbeamercolor{navigation symbols}{use=structure,fg=mc@navsymbols}% with or without *?
+\setbeamercolor{navigation symbols dimmed}{use=structure,fg=mc@navsymbols!50!bg}% with or without *?
+
+\setbeamercolor*{block body}{bg=normal text.bg!90!black}
+\setbeamercolor*{block body alerted}{bg=normal text.bg!90!black}
+\setbeamercolor*{block body example}{bg=normal text.bg!90!black}
+\setbeamercolor*{block title}{parent=structure,bg=normal text.bg!75!black}
+\setbeamercolor*{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.fg,bg=normal text.bg!75!black}
+\setbeamercolor*{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.fg,bg=normal text.bg!75!black}
+
+\setbeamercolor{item}{fg=mc@itemi}% with or without *?
+\setbeamercolor{subitem}{parent=item}% with or without *?
+\setbeamercolor{subsubitem}{parent=subitem}% with or without *?
+
+\setbeamercolor{item projected}{fg=black}
+
+\setbeamercolor{enumerate item}{parent=item}% with or without *?
+\setbeamercolor{enumerate subitem}{parent=subitem}% with or without *?
+\setbeamercolor{enumerate subsubitem}{parent=subsubitem}% with or without *?
+
+\setbeamercolor{itemize item}{parent=item}% with or without *?
+\setbeamercolor{itemize subitem}{parent=subitem}% with or without *?
+\setbeamercolor{itemize subsubitem}{parent=subsubitem}% with or without *?
+#+end_src
+
+#+begin_src latex
+\setbeamercolor*{sidebar}{parent=palette primary}
+
+\setbeamercolor{palette sidebar primary}{use=normal text,fg=normal text.fg}
+\setbeamercolor{palette sidebar secondary}{use=structure,fg=structure.fg}
+\setbeamercolor{palette sidebar tertiary}{use=normal text,fg=normal text.fg}
+\setbeamercolor{palette sidebar quaternary}{use=structure,fg=structure.fg}
+#+end_src
+
+#+begin_src latex
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+
+\mode
+<all>
+
+% This is for the sake of Emacs.
+% Local Variables:
+% time-stamp-format: "%:y/%02m/%02d"
+% time-stamp-start: "Provides\\(Class\\|Package\\){[a-zA-Z-]+}\\["
+% time-stamp-end: " "
+% End:
+
+%% beamercolorthememcnew.sty ends here
+#+end_src
+
+* Inner theme
+  :PROPERTIES:
+  :tangle:   beamerinnerthememcnew.sty
+  :END:
+
+#+begin_src latex
+<<copyright>>
+
+\ProvidesPackage{beamerinnerthememcnew}[2012/05/09 v1.0 beamer MC inner theme]
+
+\mode<presentation>
+
+% space from the sidebar (if any)
+\setbeamersize{text margin left=0.5cm}
+\setbeamersize{text margin right=0.5cm}
+
+% space from the left *margin* to the item *text* (not the item marker)
+\setlength\leftmargini{0.4cm}
+\setlength\leftmarginii{0.4cm}
+\setlength\leftmarginiii{0.4cm}
+
+\mode
+<all>
+#+end_src
+
+* Outer theme
+  :PROPERTIES:
+  :tangle:   beamerouterthememcnew.sty
+  :END:
+
+#+begin_src latex
+<<copyright>>
+
+\ProvidesPackage{beamerouterthememcnew}[2012/05/09 v1.0 beamer MC outer theme]
+
+\newdimen\beamer@sidebarwidth
+\newdimen\beamer@headheight
+\usebeamerfont{frametitle}
+\beamer@sidebarwidth=2.5\baselineskip
+\beamer@headheight=2.5\baselineskip
+\reset@font
+
+\def\beamer@lefttext{left}
+
+\DeclareOptionBeamer{hideothersubsections}[]{\beamer@nav@subsectionstyle{show/show/hide}}
+\DeclareOptionBeamer{hideallsubsections}[]{\beamer@nav@subsectionstyle{hide}}
+
+\DeclareOptionBeamer{width}{\beamer@sidebarwidth=#1}
+\DeclareOptionBeamer{height}{\beamer@headheight=#1}
+\DeclareOptionBeamer{left}{\def\beamer@sidebarside{left}}
+\DeclareOptionBeamer{right}{\def\beamer@sidebarside{right}}
+\ExecuteOptionsBeamer{left}
+\ProcessOptionsBeamer
+
+
+\mode<presentation>
+
+\ifdim\beamer@headheight>0pt
+% if head height is 0pt, use default frame title
+
+  \setbeamercolor*{frametitle}{parent=sidebar}
+
+  \defbeamertemplate*{frametitle}{sidebar theme}
+  {%
+    \nointerlineskip%
+    \vskip-\beamer@headheight%
+    \vbox to \beamer@headheight{%
+      \vfil
+      \leftskip=-\beamer@leftmargin%
+      \advance\leftskip by0.3cm%
+      \rightskip=-\beamer@rightmargin%
+      \advance\rightskip by0.3cm plus1fil%
+      {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par}%
+      {\usebeamercolor[fg]{framesubtitle}\usebeamerfont{framesubtitle}\insertframesubtitle\par}%
+      \vbox{}%
+      \vskip-1em%
+      \vfil
+    }%
+  }
+
+  \defbeamertemplate*{headline}{sidebar theme}
+  {%
+    \begin{beamercolorbox}[wd=\paperwidth]{frametitle}
+      \ifx\beamer@sidebarside\beamer@lefttext%
+      \else%
+        \hfill%
+      \fi%
+      \ifdim\beamer@sidebarwidth>0pt%
+        \usebeamercolor[bg]{logo}%
+        \vrule width\beamer@sidebarwidth height \beamer@headheight%
+        \hskip-\beamer@sidebarwidth%
+        \hbox to \beamer@sidebarwidth{\hss\vbox to
+          \beamer@headheight{\vss\hbox{\color{fg}\insertlogo}\vss}\hss}%
+      \else%
+        \vrule width0pt height \beamer@headheight%
+      \fi%
+    \end{beamercolorbox}
+  }
+\fi
+
+
+\def\beamer@sidebarformat#1#2#3{%
+  \begin{beamercolorbox}[wd=\beamer@sidebarwidth,leftskip=#1,rightskip=1ex plus1fil,vmode]{#2}
+    \vbox{}%
+    #3\par%
+    \vbox{}%
+    \vskip-1.5ex%
+  \end{beamercolorbox}
+}
+
+\defbeamertemplate*{section in sidebar}{sidebar theme}
+{%
+  \vbox{%
+    \vskip1ex%
+    \beamer@sidebarformat{3pt}{section in sidebar}{\insertsectionhead}%
+  }%
+}
+
+\defbeamertemplate*{section in sidebar shaded}{sidebar theme}
+{%
+  \vbox{%
+    \vskip1ex%
+    \beamer@sidebarformat{3pt}{section in sidebar shaded}{\insertsectionhead}%
+  }%
+}
+
+\defbeamertemplate*{subsection in sidebar}{sidebar theme}
+{%
+  \beamer@sidebarformat{5pt}{subsection in sidebar}{\insertsubsectionhead}%
+}
+
+\defbeamertemplate*{subsection in sidebar shaded}{sidebar theme}
+{%
+  \beamer@sidebarformat{5pt}{subsection in sidebar shaded}{\insertsubsectionhead}%
+}
+
+\defbeamertemplate*{subsubsection in sidebar}{sidebar theme}
+{%
+  \beamer@sidebarformat{7pt}{subsubsection in sidebar}{\insertsubsubsectionhead}%
+}
+
+\defbeamertemplate*{subsubsection in sidebar shaded}{sidebar theme}
+{%
+  \beamer@sidebarformat{7pt}{subsubsection in sidebar shaded}{\insertsubsubsectionhead}%
+}
+
+
+\ifdim\beamer@sidebarwidth>0pt
+
+% Sidebar
+  \setbeamersize{sidebar width \beamer@sidebarside=\beamer@sidebarwidth}
+  \defbeamertemplate*{sidebar \beamer@sidebarside}{sidebar theme}
+  {
+    \beamer@tempdim=\beamer@sidebarwidth%
+    \advance\beamer@tempdim by -6pt%
+    % {\usebeamerfont{title in sidebar}%
+    %   \vskip1.5em%
+    %   \hskip3pt%
+    %   \usebeamercolor[fg]{title in sidebar}%
+    %   \insertshorttitle[width=\beamer@tempdim,center,respectlinebreaks]\par%
+    %   \vskip1.25em%
+    % }%
+    % {%
+    %   \hskip3pt%
+    %   \usebeamercolor[fg]{author in sidebar}%
+    %   \usebeamerfont{author in sidebar}%
+    %   \insertshortauthor[width=\beamer@tempdim,center,respectlinebreaks]\par%
+    %   \vskip1.25em%
+    % }%
+    \insertverticalnavigation{\beamer@sidebarwidth}%
+    \vfill
+    \ifx\beamer@sidebarside\beamer@lefttext%
+    \else%
+      \usebeamercolor{normal text}%
+      \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
+      \vskip2pt%
+    \fi%
+  }%
+
+  \ifx\beamer@sidebarside\beamer@lefttext%
+    \defbeamertemplate*{sidebar right}{sidebar theme}
+    {%
+      \vfill%
+      \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
+      \vskip2pt}
+  \fi
+  % Margins
+  \setbeamersize{text margin left=0.5cm,text margin right=0.5cm}
+\fi
+
+\mode
+<all>
+#+end_src
+
+* Font theme
+  :PROPERTIES:
+  :tangle:   beamerfontthememcnew.sty
+  :END:
+
+#+begin_src latex
+<<copyright>>
+
+\ProvidesPackage{beamerfontthememcnew}[2012/05/09 v1.0 beamer MC font theme]
+
+\mode<presentation>
+
+\setbeamerfont{alerted text}{series=\bfseries}
+
+\mode
+<all>
+#+end_src
+
+* Lessons learned
+
+** Modifying templates
+
+When modifying/creating template, we should always use the =\usebeamerfont{XXX}=
+in order for font templates to be applied (instead of hardcoding the font in
+the template). Same for colors: use the =beamercolorbox= environment with the
+beamer color. See example below with author:
+
+#+begin_src latex
+    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+        \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+#+end_src
+
+This box will use colors and fonts defined by the following commands:
+
+#+begin_src latex
+\setbeamerfont{author}{size=\scriptsize,series=\mdseries}
+\setbeamercolor{author}{fg=black,bg=yellow}
+#+end_src

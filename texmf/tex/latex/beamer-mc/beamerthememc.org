@@ -1,0 +1,593 @@
+#+TITLE:     Beamer Theme MC
+#+AUTHOR:    Fabrice Niessen
+#+EMAIL:     fni@missioncriticalit.com
+#+Time-stamp: <2013-12-19 Thu 12:23>
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+
+#+PROPERTY:  eval never
+#+PROPERTY:  comments no
+#+PROPERTY:  tangle beamerthememc.sty
+#+SETUPFILE: ~/src/org-style/theme-bigblow.setup
+
+* Tasks
+
+** TODO Fix the title page
+
+See http://www.math.umbc.edu/~rouben/beamer/quickstart-Z-H-12.html#node_sec_12
+
+** TODO Fix environments such as quote, verse
+
+** TODO Continue to empty beamerthememc.sty
+
+#+begin_src latex
+% Copyright 2010-2015 by Fabrice Niessen
+
+\ProvidesPackage{beamerthememc}[2015/01/07 v1.0 beamer MC theme]
+
+
+\DeclareOptionBeamer{width}
+{\PassOptionsToPackage{width=#1}{beamerouterthememc}}
+
+\DeclareOptionBeamer{hideothersubsections}
+{\PassOptionsToPackage{hideothersubsections=#1}{beamerouterthememc}}
+
+\DeclareOptionBeamer{hideallsubsections}
+{\PassOptionsToPackage{hideallsubsections=#1}{beamerouterthememc}}
+
+%\ExecuteOptionsBeamer{hideothersubsections}% default value
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\useoutertheme[height=0pt,left]{mcnew}
+
+\usecolortheme{mcnew}
+\setbeamercolor*{titlelike}{parent=structure}
+
+
+\useinnertheme{circles}
+\setbeamertemplate{frametitle}[default][left]
+
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamercolor{section number projected}{fg=white}
+\setbeamerfont{subsection in toc}{size=\footnotesize}
+
+\useinnertheme{mcnew}
+
+% Color hyperref links and urls (from mcreport.cls)
+\definecolor{mc-color-link}{HTML}{1968BA} % blue (TOC and intern links) (XXX)
+\definecolor{mc-color-url}{HTML}{003399} % darker blue
+\hypersetup{%
+colorlinks=true,% avoid the red boxed around cross-references
+linkcolor=mc-color-link,% color of internal links
+urlcolor=mc-color-url, % color of external links
+}%
+
+\mode
+<all>
+
+%* Options
+
+% - `grid', for putting a grid in background (for debugging placement of stuff)
+
+
+%* Packages
+
+%% % level of stream compression (text and in-line graphics): best
+%% \pdfcompresslevel=9
+
+%% % all non-stream objects are compressed
+%% \pdfobjcompresslevel=3
+
+\RequirePackage{pgf}
+
+% set space between lines
+% FIXME Space should be bigger between items and normal between 2 lines of the
+% same item...
+% \RequirePackage{setspace}
+
+% \setstretch{1.2}
+% 2011-05-26-FPZ: instead of the setspace package (which makes foonotes
+% disappear), use the following command:
+\linespread{1.2}
+#+end_src
+
+*** Listings
+
+- http://ctan.math.utah.edu/ctan/tex-archive/macros/latex/contrib/listings/listings.pdf
+- http://stackoverflow.com/questions/741985/latex-source-code-listing-like-in-professional-books
+- http://efreedom.com/Question/1-2965848/LaTeX-Two-Columns-Listings-Numbers
+
+#+begin_src latex
+\usepackage{booktabs} % publishing quality tables
+\usepackage{colortbl}
+#+end_src
+
+See http://en.wikibooks.org/wiki/LaTeX/Tables
+
+#+begin_src latex
+\usepackage[printonlyused]{acronym}
+\usepackage{tikz}
+% \usepackage{pgfplots}% (not in medium TeX Live installation)
+
+
+% \usepackage{beamerthemetree}
+% \usepackage{beamerthemesplit}
+% \usepackage{beamerthemeshadow}
+% \setbeamertemplate{items}[circle]
+#+end_src
+
+#+begin_src latex
+%* 15 Presentation Themes
+
+% A presentation theme dictates for every single detail of a presentation
+% what it looks like.
+
+% 1. without Navigation Bars
+% 2. with a Tree-Like Navigation Bar
+% 3. with a Table of Contents Sidebar
+% 4. with a Mini-Frame Navigation
+% 5. with Section and Subsection Tables
+
+% An outer theme dictates (roughly) the overall layout of frames.
+
+% \usetheme{umbc3}
+% \usetheme{progressbar}
+% \useoutertheme{split}
+#+end_src
+
+#+begin_src latex
+%* 17 Color Themes
+
+% Color logic:
+% - black = normal
+% - red = alert
+% - green = example
+% - blue = structure
+
+% \usecolortheme[named=mc-red]{structure}
+
+% FIXME One should use {parent=palette tertiary} instead of hardcoded colors
+\definecolor{mc-gray}{HTML}{E5E5E5}
+\definecolor{mc-lightgray}{HTML}{EEEEEE}
+\definecolor{mc-red}{HTML}{FF5D99}
+
+\definecolor{mc-blue}{HTML}{333366}
+\definecolor{mc-black}{HTML}{000000}
+\definecolor{mc-dark-gray}{HTML}{595959}
+
+\definecolor{linkcolor}{HTML}{183573} % used at TOC
+\definecolor{structure}{HTML}{183573}
+\definecolor{urlcolor}{HTML}{183573} %86B647}
+
+\definecolor{locationbarfg}{HTML}{FFFF88}
+\setbeamercolor*{Location bar}{fg=locationbarfg}
+
+%** 17.6 Transparency Effects
+
+% \setbeamercovered{transparent} % invisible?
+
+% overlays not yet revealed will appear faintly
+\setbeamercovered{dynamic}
+
+% You could always add
+% \beamerdefaultoverlayspecification{<+->}
+% to the preamble
+#+end_src
+
+#+begin_src latex
+%* 18 Font Themes
+
+\usepackage{helvet}
+% \usepackage{lxfonts}
+
+\usefonttheme{default}
+#+end_src
+
+#+begin_src latex
+%* 8 Creating Frames
+
+%** 8.2 Components of a Frame
+
+%*** 8.2.1 headline and footline
+
+% \AtBeginSection[]{% Do nothing for \section*
+% \begin{frame}<beamer>  % frame is only shown in beamer mode
+%     \frametitle{Outline}
+%     \tableofcontents[currentsection]
+% \end{frame}
+% }
+
+% \AtBeginSubsection[]{% Do nothing for \section*
+% \begin{frame}<beamer>  % frame is only shown in beamer mode
+%     \frametitle{Outline}
+%     \tableofcontents[currentsubsection]
+% \end{frame}
+% }
+
+\useheadtemplate{%
+\raisebox{-0.75cm}{\parbox{\textwidth}{%
+% \footnotesize{\tiny\color{black}%
+% \thesection - \insertsection\ \leavevmode\leaders\hrule height3.2pt depth-2.8pt\hfill\kern0pt}%
+}}}%
+
+
+
+% % \CIMimage holds the \includegraphics command
+% \newcommand{\CIMimage}{\includegraphics[height=5.5ex]{AXA}}
+%
+% % Here is the headline template
+% \setbeamertemplate{headline}
+% {%
+% % \pgfuseshading{beamer@treeshade}%
+% % \vskip-10.25ex%
+%
+% % bar with frame title, and logo. I use raisebox to fine-tune its positioning.
+% \vskip10pt
+% \begin{beamercolorbox}[wd=\paperwidth,ht=2.125ex,dp=1.125ex,ignorebg,
+%     leftskip=.3cm,rightskip=.3cm plus1fil]{section in head/foot}
+%     \usebeamerfont{section in head/foot}%
+%     \hskip6pt\insertsectionhead{} --- \insertsubsectionhead\hfill%
+%     \raisebox{-0.3ex}[0pt]{\CIMimage}% <--- logo is placed here
+%     %^^^^^^^^^^^^^^^^^^^^^
+% \end{beamercolorbox}
+% }
+
+
+
+% \useoutertheme{infolines}
+
+\definecolor{mc-color-brand}{HTML}{1968BA} % blue
+
+\newcommand*{\mc}{%
+    \textsf{%
+        \color{mc-color-brand}{\bfseries{}M~I~S~S~I~O~N~}%
+        \color{black}C~R~I~T~I~C~A~L~%
+        \color{mc-color-brand}{\bfseries{}I~T}}}
+\setbeamercolor{footline}{fg=mc-gray}
+\setbeamerfont{footline}{size*={4}{4}}
+
+\setbeamercolor*{section in head/foot}{fg=black}
+\setbeamercolor*{subsection in head/foot}{fg=black}
+\setbeamercolor*{author in head/foot}{fg=black}
+\setbeamercolor*{title in head/foot}{fg=black}
+\setbeamercolor*{date in head/foot}{fg=black}
+\setbeamercolor{fpz}{bg=red}
+\newlength{\mcframewidth}
+\newlength{\mcfootheight}
+
+\setbeamertemplate{footline}
+{%
+    \setlength{\mcframewidth}{\paperwidth}%
+    \addtolength{\mcframewidth}{-\beamer@leftsidebar}%
+    \setlength{\mcfootheight}{2.25ex}%
+    \leavevmode%
+    \hbox{%
+    \begin{beamercolorbox}[wd=\beamer@leftsidebar,ht=\mcfootheight,dp=8pt,left]{sidebar}
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=.33\mcframewidth,ht=\mcfootheight,dp=8pt,left]
+        % wd = width
+        % ht = height
+        % dp = depth (relates to display order)
+        {author in head/foot}%
+        \hskip\beamer@leftmargin%
+        \usebeamerfont{author in head/foot}% FIXME Duplicate of 2 lines above?
+        \raisebox{0.05em}[0mm][-0.05em]{\copyright}~\mc
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.34\mcframewidth,ht=\mcfootheight,dp=8pt,center]
+        {title in head/foot}%
+        \usebeamerfont{date in head/foot}
+        \insertdate
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.33\mcframewidth,ht=\mcfootheight,dp=8pt,right]
+        {date in head/foot}%
+        \insertframenumber{}% /\inserttotalframenumber to create a "k/n" counter
+        % un frame est constitué de plusieurs slide superposés comme des calques
+        \hspace*{\beamer@rightmargin}% right margin
+    \end{beamercolorbox}
+    }%
+%    \vskip0pt
+}
+
+
+%*** 8.2.2 sidebars
+
+% navigation symbols
+\newif\if@navsymbols
+\@navsymbolsfalse
+% \define@key{mc}{@navsymbols}[false]{%
+%     \mc@boolkey{@navsymbols}{#1}}
+
+% Use \beamertemplatenavigationsymbolsempty to remove the navigation symbols
+
+% remove the logo from the right sidebar (navigation symbols only) so that we
+% can place it less obtrusively
+\defbeamertemplate*{sidebar right}{mc theme} % XXX default? code under test
+{
+    \vfill%
+    \if@navsymbols%
+        \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
+    \fi
+    \vskip2pt%
+}
+\setbeamertemplate{navigation symbols}{}
+
+
+%*** 8.2.3 navigation bars
+
+\setbeamercolor*{section in head/foot}{fg=red}
+\setbeamerfont{section in head/foot}{size=\footnotesize,series=\normalfont}
+
+
+%*** 8.2.4 navigation symbols
+
+% % comment out line below to see navigation symbols
+% \setbeamertemplate{navigation symbols}{}
+
+\setbeamercolor*{navigation symbols}{fg=mc-color-brand}
+#+end_src
+
+*** Logo
+
+Some beamer styles display logos and some do not. IIRC it has to do with the
+"outer theme" used by the style.
+
+If you have a favorite theme that does not include logos, you might be able to
+hack it to do so. I customized a few of the included themes to display logos
+for my college (and also use our color scheme).
+
+#+begin_src latex
+\newlength{\logoheight}\setlength{\logoheight}{22pt}
+
+% mclogo contains the MC logo
+\newcommand{\mclogo}[1]{\def\insertmclogo{#1}}
+\mclogo{\includegraphics[height=\logoheight]{MC}}
+#+end_src
+
+*** Frame title
+
+#+begin_src latex
+\setbeamercolor*{frametitle}{fg=mc-color-brand}
+\setbeamerfont{frametitle}{series=\bfseries,family=\sffamily,shape=\upshape,size=\Large}
+\setbeamertemplate{frametitle}[default][center]
+
+% \let\orig@frametitle=\frametitle
+% \renewcommand\frametitle[1]{%
+%     \orig@frametitle{%
+%         \llap{\insertlogo}
+%         \hfill{}
+%         {#1}%
+%         \hfill{}
+%         % \includegraphics[height=24pt]{MissionCriticalIT}%
+%         \rlap{\insertlogo}
+%     }% orig@frametitle
+% }% frametitle
+
+% DEBUG
+\DeclareOption{debug}
+{
+    \setbeamercolor*{part1}{bg=yellow}
+    \setbeamercolor*{part3}{bg=yellow}
+    \setbeamercolor*{frametitle}{bg=orange}
+    \setbeamercolor*{rule}{bg=red}
+
+    % place a grid on the background (default step of 0.5cm)
+    \def\beamer@bggrid{
+        \setbeamertemplate{background}[grid][step=0.25cm]
+    }
+}
+\ProcessOptions
+\@ifundefined{beamer@bggrid}{}{\beamer@bggrid}
+
+\setbeamerfont{subtitle}{size=\Large,series=\mdseries,family=\sffamily,shape=\upshape}
+
+% We redefine the frametitle to include the MC logo and the other logo
+% (if desired)
+\definecolor{mc@sepline}{rgb}{0.26,0.26,0.26}
+\setbeamertemplate{frametitle}
+{%
+     \leavevmode%
+     \vskip -40pt
+     \hbox{%
+%     % \begin{beamercolorbox}[wd=.03\mcframewidth,ht=2.25ex,dp=8pt,left]{part1}%
+%     %     % \hspace{-0.5cm}
+%     %     % \raisebox{-0.3ex}[0pt]{\insertlogo}%
+%     % \end{beamercolorbox}%
+       \begin{beamercolorbox}[wd=.92\textwidth,left]{frametitle}%
+         \insertframetitle
+       \end{beamercolorbox}%
+       \begin{beamercolorbox}[wd=.08\textwidth,right]{part3}%
+         \raisebox{-.8ex}[0pt][.8ex]{\insertmclogo}
+       \end{beamercolorbox}%
+     }
+     {\usebeamercolor[fg]{framesubtitle}\usebeamerfont{framesubtitle}\insertframesubtitle\par}%
+     \vskip -2.25ex
+     \begin{beamercolorbox}[wd=\textwidth]{rule}%
+         {\color{mc-color-brand}\rule{\textwidth}{0.4pt}}% FIXME color should be mc@sepline
+     \end{beamercolorbox}%
+}
+
+\setbeamertemplate{frametitle continuation}[from second]
+\renewcommand\insertcontinuationtext{...}
+
+
+%*** 8.2.7 background
+
+\setbeamercolor*{normal text}{fg=black,bg=white}
+%! the background of this color is used for the background of the presentation
+
+% \definecolor{bottomcolour}{HTML}{ED9900}
+% \definecolor{middlecolour}{HTML}{F5CC00}
+% \setbeamertemplate{background canvas}[vertical shading][bottom=white, middle=middlecolour, top=bottomcolour]
+
+%% It is possible to use a different background template, e.g. an empty
+%% Powerpoint file that is converted to PNG, JPG, EPS or PDF:
+% \usebackgroundtemplate{
+%     \includegraphics[width=\paperwidth, height=\paperheight]{img}
+% }
+#+end_src
+
+*** Title page
+
+#+begin_src latex
+% When setting the logo also set the titlegraphic
+\let\orig@logo=\logo
+\renewcommand{\logo}[1]{\orig@logo{#1}\titlegraphic{#1}}
+
+% mctitlegraphic contains the MC logo which goes on the title page
+\newcommand{\mctitlegraphic}[1]{\def\insertmctitlegraphic{#1}}
+\mctitlegraphic{\includegraphics[height=22pt]{MissionCriticalIT}}
+#+end_src
+
+#+begin_src latex
+\setbeamercolor*{title page}{fg=black}
+\setbeamerfont{title page}{size=\Large,series=\bfseries}
+\defbeamertemplate*{title page}{mc}[1][]
+{
+%\vbox{}
+\vfill
+\begin{centering}
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+    \vfill
+    \begin{beamercolorbox}[sep=8pt,center,#1]{title}
+        \usebeamerfont{title}\inserttitle\par%
+        \ifx\insertsubtitle\@empty%
+        \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+        \fi%
+    \end{beamercolorbox}%
+%    \vskip1em\par
+    \vfill
+    \vfill
+    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+        \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    % \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+    %     \usebeamerfont{institute}\insertinstitute
+    % \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+        \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+    \vfill
+    {\insertmctitlegraphic\par}
+    \vfill
+\end{centering}
+\vfill
+}
+
+% centering the title page (sidebar theme)
+\renewcommand{\maketitle}{%
+\begin{frame}[plain]
+    % if we can't play fair, we have to cheat (see
+    % http://www.mofeel.net/809-comp-text-tex/14821.aspx)
+    \hspace*{-\beamer@leftsidebar}%
+    \advance\textwidth by \beamer@leftsidebar\relax
+    \beamer@leftsidebar=\z@
+    \begin{minipage}[t][\paperheight]{\textwidth}\par%
+        \titlepage
+    \end{minipage}
+\end{frame}%
+}
+
+\setbeamercolor*{title}{fg=black}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries,family=\sffamily,shape=\upshape}
+
+% \setbeamercolor{title}{fg=green!90!black,bg=green!10!white}
+
+\setbeamercolor*{subtitle}{fg=black}
+\setbeamerfont{subtitle}{size=\Large,series=\mdseries,family=\sffamily,shape=\upshape}
+
+\setbeamerfont{author}{size=\scriptsize,series=\mdseries}
+\setbeamerfont{institute}{size=\normalsize,series=\mdseries}
+\setbeamerfont{date}{size=\scriptsize,series=\mdseries}
+#+end_src
+
+#+begin_src latex
+%* 12 Structuring a Presentation: The Local Structure
+
+%** 12.1 Itemizations, Enumerations, and Descriptions
+
+%\setbeamercolor*{itemize item}{fg=mc-red}
+\setbeamertemplate{itemize item}[triangle]
+
+%\setbeamercolor*{itemize subitem}{fg=mc-red}
+\setbeamertemplate{itemize subitem}{\raisebox{.15em}[0pt]{\LARGE $\centerdot$}}
+% 2010-06-14 [FPZ]: added the [0pt] depth parameter in order to avoid
+% different spaces between items if p-g-q letters are present in previous item.
+
+\setbeamerfont{itemize/enumerate body}{}% series=\bfseries
+\setbeamerfont{itemize/enumerate subbody}{series=\mdseries,size=\footnotesize}
+
+%\setbeamercolor*{itemize subsubitem}{fg=mc-red}
+\setbeamertemplate{itemize subsubitem}{\textendash}
+
+%\setbeamercolor*{enumerate item}{fg=mc-red}
+\setbeamertemplate{enumerate item}[default] % FIXME Numbered text in TOC
+\setbeamerfont{enumerate item}{size=\normalsize}% series=\bfseries
+
+
+%** 12.2 Highlighting
+
+\setbeamercolor*{alerted text}{fg=mc-color-brand}
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamerfont{structure}{family=\sffamily} % toc
+
+
+\setbeamercolor*{section in sidebar shaded}{parent=palette sidebar secondary,fg=mc-gray}
+\setbeamercolor*{section in sidebar}{parent=section in sidebar shaded,bg=white,fg=mc-color-brand}
+\setbeamerfont{section in sidebar}{size*={5}{5}}
+
+\setbeamercolor*{subsection in sidebar shaded}{parent=palette sidebar primary,fg=mc-gray}
+\setbeamercolor*{subsection in sidebar}{parent=subsection in sidebar shaded,bg=section in sidebar.bg,fg=section in sidebar.fg}
+
+%** 12.3 Block Environments
+
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+\setbeamercolor*{block title}{bg=mc-black,fg=white}
+\setbeamercolor*{block body}{bg=mc-lightgray,fg=mc-dark-gray}
+\setbeamercolor*{block body alerted}{bg=white}
+\setbeamercolor*{block body example}{bg=white}
+#+end_src
+
+#+begin_src latex
+%* Other packages
+
+\RequirePackage{mccommon}
+
+
+% This is for the sake of Emacs.
+% Local Variables:
+% coding: utf-8
+% time-stamp-format: "%:y/%02m/%02d"
+% time-stamp-start: "Provides\\(Class\\|Package\\){[a-zA-Z-]+}\\["
+% time-stamp-end: " "
+% End:
+
+%% beamerthememc.sty ends here
+#+end_src
+
+And place the code in the right place in this file (with tangling support).
+
+*** Customize figures caption
+
+#+begin_src latex
+\usepackage{caption}
+\captionsetup{font={scriptsize,it},labelfont=scriptsize,labelformat=empty}
+#+end_src
+
+** TODO Understand the diff between `\DeclareOptionBeamer' and `\DeclareOption'
+
+Same with `\ProcessOptions'.
+
+** TODO See how other themes are built, and which options are passed, to understand the basic options
+
+** TODO Add options to have infolines and/or sidebar settings
+
+** TODO Fix the MC logo problem
+
+Cut blank margins, try to position it either absolutely, either depending on
+inner space of the frame

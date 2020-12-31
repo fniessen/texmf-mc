@@ -1,6 +1,6 @@
 %% mcreport.cls -- LaTeX2e MC report class
 %
-% Copyright (C) 2008-2014 Fabrice Niessen, Francesco Pizzolante
+% Copyright (C) 2008-2019 Fabrice Niessen, Francesco Pizzolante
 
 %* TODO
 %
@@ -12,7 +12,7 @@
 %* Identification
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mcreport}[2010/04/08 v1.2 Mission Critical IT report class]
+\ProvidesClass{mcreport}[2019/03/20 v1.4 Mission Critical IT report class]
 
 
 % * --[ Documentation
@@ -336,9 +336,7 @@
 \else%
     \mctextlogo{%
     \textsf{%
-        \color{mc-color-brand}\textbf{M~I~S~S~I~O~N~}%
-        \color{black}C~R~I~T~I~C~A~L~%
-        \color{mc-color-brand}\textbf{I~T}}}
+        \color{black}Fabrice Niessen}}
 \fi
 
 \newcommand{\mcbold}[1]{\textbf{#1}}
@@ -510,9 +508,9 @@
 \if@anonym%
     \mctitlegraphic{}
 \else \if@commercial%
-    \mctitlegraphic{\includegraphics[height=2.5cm]{MissionCriticalIT}}
+    \mctitlegraphic{}
 \else%
-    \mctitlegraphic{\includegraphics[height=2cm]{MissionCriticalIT}}
+    \mctitlegraphic{}
 \fi \fi%
 
 % \logo and \titlegraphic define client logo and title graphics.
@@ -565,7 +563,6 @@
 \else \if@whitepaper
     \renewcommand{\maketitle}{%
         \thispagestyle{plain}%
-        \includegraphics[height=1.5cm]{MissionCriticalIT} \\
         \\
         \textbf{For more information, contact:} \\
         Michel Vanden Bossche-Marquette, Co-Founder \& CEO \\
@@ -911,7 +908,7 @@
    {}
    {}
    {}
-\titlespacing{\paragraph}{}{0pt}{*0}
+\titlespacing{\paragraph}{0pt}{0pt}{*0}
 
 % Chapter header
 \titleformat{\chapter}[hang]% shape
@@ -1369,11 +1366,6 @@
 % overfull \hbox. The default value of \tolerance is 200. Setting \tolerance
 % to 1000 suppresses overfull \hbox warnings and the printing of slugs.
 
-
-% Un petit truc pour que les pages qui finissent par un \pagebreak ne
-% soient pas ajustées verticalement : redéfinir \pagebreak en préambule :
-\let\ancienPagebreak\pagebreak%
-\renewcommand{\pagebreak}{\vspace*{\fill}\par\ancienPagebreak}%
 
 \if@french%
     \AtBeginDocument{\selectlanguage{french}}%

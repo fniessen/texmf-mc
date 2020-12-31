@@ -1,17 +1,16 @@
 %% mcdocument.sty -- LaTeX2e MC common commands and environments
 %
-% Copyright (C) 2008-2015 Fabrice Niessen
+% Copyright (C) 2008-2019 Fabrice Niessen
 
 %* --[ Identification --------------------------------------------------------
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mcdocument}[2015/09/25 v1.2 Mission Critical IT Common]
+\ProvidesPackage{mcdocument}[2019/03/20 v1.3 Mission Critical IT Common]
 
 %* --[ Imports ---------------------------------------------------------------
 
 % multilingual support for LaTeX
-% \RequirePackage[frenchb,english]{babel} % main language is the latest loaded
-\RequirePackage[english,dutch]{babel} % main language is the latest loaded
+\RequirePackage[french,english]{babel} % main language is the latest loaded
 \RequirePackage[printonlyused]{acronym}% (not in medium TeX Live installation)
 \RequirePackage{listings} % must be loaded after `babel'
 
@@ -269,9 +268,9 @@ ABCDEF abcdef 123456 ,;:!}%
   colframe=infofg,
   fontupper=\sffamily,
   left=10mm,
-  overlay={%
-    \node at ([xshift=5mm]frame.west)
-    {\includegraphics[width=7mm,height=7mm]{info}};}
+  % overlay={%
+  %   \node at ([xshift=5mm]frame.west)
+  %   {\includegraphics[width=7mm,height=7mm]{info}};}
 }
 
 \definecolor{tipbg}{HTML}{DFF2BF}
@@ -284,9 +283,9 @@ ABCDEF abcdef 123456 ,;:!}%
   colframe=tipfg,
   fontupper=\sffamily,
   left=10mm,
-  overlay={%
-    \node at ([xshift=5mm]frame.west)
-    {\includegraphics[width=7mm,height=7mm]{tip}};}
+  % overlay={%
+  %   \node at ([xshift=5mm]frame.west)
+  %   {\includegraphics[width=7mm,height=7mm]{tip}};}
 }
 
 \definecolor{notebg}{HTML}{FEEFB3}
@@ -299,9 +298,9 @@ ABCDEF abcdef 123456 ,;:!}%
   colframe=notefg,
   fontupper=\sffamily,
   left=10mm,
-  overlay={%
-    \node at ([xshift=5mm]frame.west)
-    {\includegraphics[width=7mm,height=7mm]{note}};}
+  % overlay={%
+  %   \node at ([xshift=5mm]frame.west)
+  %   {\includegraphics[width=7mm,height=7mm]{note}};}
 }
 
 \definecolor{warningbg}{HTML}{FFBABA}
@@ -314,9 +313,9 @@ ABCDEF abcdef 123456 ,;:!}%
   colframe=warningfg,
   fontupper=\sffamily,
   left=10mm,
-  overlay={%
-    \node at ([xshift=5mm]frame.west)
-    {\includegraphics[width=7mm,height=7mm]{warning}};}
+  % overlay={%
+  %   \node at ([xshift=5mm]frame.west)
+  %   {\includegraphics[width=7mm,height=7mm]{warning}};}
 }
 
 \newtcolorbox{error}{%
@@ -326,9 +325,9 @@ ABCDEF abcdef 123456 ,;:!}%
   colframe=warningfg,
   fontupper=\sffamily,
   left=10mm,
-  overlay={%
-    \node at ([xshift=5mm]frame.west)
-    {\includegraphics[width=7mm,height=7mm]{warning}};}
+  % overlay={%
+  %   \node at ([xshift=5mm]frame.west)
+  %   {\includegraphics[width=7mm,height=7mm]{warning}};}
 }
 
 %% End of package

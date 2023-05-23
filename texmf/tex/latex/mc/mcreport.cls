@@ -1,6 +1,6 @@
 %% mcreport.cls -- LaTeX2e MC report class
 %
-% Copyright (C) 2008-2019 Fabrice Niessen, Francesco Pizzolante
+% Copyright (C) 2008-2023 Fabrice Niessen
 
 %* TODO
 %
@@ -12,7 +12,7 @@
 %* Identification
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mcreport}[2019/03/20 v1.4 Mission Critical IT report class]
+\ProvidesClass{mcreport}[2023/05/23 v1.5 Mission Critical IT report class]
 
 
 % * --[ Documentation
@@ -330,13 +330,15 @@
 
 %* Definitions (define your own commands etc.)
 
+% Define the author's name for the copyright in the footer.
 \newcommand{\mctextlogo}[1]{\def\@mctextlogo{#1}}
+
+% Check if the author's name should be displayed or hidden.
+\newcommand{\authorName}{\textsf{\color{black}Fabrice Niessen}}
 \if@anonym%
     \mctextlogo{}%
 \else%
-    \mctextlogo{%
-    \textsf{%
-        \color{black}Fabrice Niessen}}
+    \mctextlogo{\authorName}
 \fi
 
 \newcommand{\mcbold}[1]{\textbf{#1}}

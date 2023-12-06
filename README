@@ -1,0 +1,21 @@
+* MC LaTeX class
+
+This repository contains the LaTeX class files for use in MC-related documents.
+
+Example:
+
+#+begin_src latex
+\documentclass{mcreport}
+
+\begin{document}
+
+\title{MC Document}
+\author{Your Name}
+\date{\today}
+
+\maketitle
+
+...
+
+\end{document}
+#+end_src

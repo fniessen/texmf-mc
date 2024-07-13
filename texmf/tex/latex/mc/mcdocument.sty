@@ -5,7 +5,7 @@
 %* --[ Identification --------------------------------------------------------
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mcdocument}[2022/10/30 v1.3 Mission Critical IT Common]
+\ProvidesPackage{mcdocument}[2023/11/13 v1.3 Mission Critical IT Common]
 
 %* --[ Imports ---------------------------------------------------------------
 
@@ -58,12 +58,12 @@
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \newcolumntype{R}{>{\raggedleft\arraybackslash}X}
 
-\RequirePackage{siunitx}[=v2]
-\if@french
-    \sisetup{locale=FR,sepfour=true,tabtextalign=right,tabformat=-7.2,tabnumalign=right,mode=text}
-\else
-    \sisetup{tabtextalign=right,tabformat=-7.2,tabnumalign=right,mode=text}
-\fi
+% \RequirePackage{siunitx}[=v2]
+% \if@french
+%     \sisetup{locale=FR,sepfour=true,tabtextalign=right,tabformat=-7.2,tabnumalign=right,mode=text}
+% \else
+%     \sisetup{tabtextalign=right,tabformat=-7.2,tabnumalign=right,mode=text}
+% \fi
 % use `S' as column spec
 % \newcommand{\cl}[1]{\multicolumn{1}{l}{#1}}
 % \newcommand{\cc}[1]{\multicolumn{1}{c}{#1}}

@@ -1305,15 +1305,15 @@
     \npthousandsep{.}%
 \fi%
 
-% Typeset SI numbers in color in draft mode
-\if@draft%
-    \sisetup{colorall,color=mc-color-section-heading}%
-\fi%
+% % Typeset SI numbers in color in draft mode
+% \if@draft%
+%     \sisetup{colorall,color=mc-color-section-heading}%
+% \fi%
 
-% If french, use a dot as digit separator
-\if@french%
-    \sisetup{digitsep=fullstop}
-\fi%
+% % If french, use a dot as digit separator
+% \if@french%
+%     \sisetup{digitsep=fullstop}
+% \fi%
 
 % publishing quality tables
 \RequirePackage{array, booktabs}%

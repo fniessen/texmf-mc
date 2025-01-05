@@ -22,7 +22,7 @@ See http://www.math.umbc.edu/~rouben/beamer/quickstart-Z-H-12.html#node_sec_12
 ** TODO Continue to empty beamerthememc.sty
 
 #+begin_src latex
-% Copyright 2010-2015 by Fabrice Niessen
+% Copyright 2010-2015 by Fabrice Niessen. All rights reserved.
 
 \ProvidesPackage{beamerthememc}[2015/01/07 v1.0 beamer MC theme]
 

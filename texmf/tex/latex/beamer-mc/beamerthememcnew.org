@@ -15,7 +15,7 @@
 
 #+name: copyright
 #+begin_src latex
-% Copyright 2010-2013 by Fabrice Niessen
+% Copyright (C) 2010-2013 Fabrice Niessen. All rights reserved.
 #+end_src
 
 * Main theme file

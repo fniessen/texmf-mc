@@ -1,6 +1,6 @@
 %% mcreport.cls -- LaTeX2e MC report class
 %
-% Copyright (C) 2008-2023 Fabrice Niessen
+% Copyright (C) 2008-2023 Fabrice Niessen. All rights reserved.
 
 %* TODO
 %
